@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\begin{document}
+\section*{Übung 3 - Neuronale Netze}
+\subsection*{Tobias Hahn - 3073375}
+\subsection*{XOR Funktion}
+\paragraph{}
+Zuerst zeichnen wir die XOR Funktion mit Belegungen auf, um zu ermitteln für welche Belegungen unsere Gewichte welches Ergebnis liefern müssen.
+\paragraph{}
+\begin{tabular}{|l|l|l|}
+	\hline
+	\( x_1 \) & \( x_2 \) & \( x_1 \oplus x_2 \) \\\hline
+	0 & 0 & 0 \\\hline
+	0 & 1 & 1 \\\hline
+	1 & 0 & 1 \\\hline
+	1 & 1 & 0 \\\hline
+\end{tabular}
+\paragraph{}
+Nehmen wir nun zwei beliebige aber fixe Gewichte \( w_1 \) und \( w_2 \) sowie einen beliebigen aber fixen Schwellwert \( \theta \) an, so erhalten wir folgende Gleichungen:
+\begin{alignat*}{1}
+	w_1 * 0 + w_2 * 0 &<  \theta \\
+	w_1 * 0 + w_2 * 1 &\ge  \theta \\
+	w_1 * 1 + w_2 * 0 &\ge \theta \\
+	w_1 * 1 + w_2 * 1 &< \theta
+\end{alignat*}
+\paragraph{}
+Formen wir nun die letzen drei Gleichungen in Aussagen über die Gewichte um, so kommen wir zu unserem Widerspruch:
+\begin{alignat*}{1}
+	w_2 &\ge \theta \\
+	w_1 &\ge \theta \\
+	w_1 + w_2 &< \theta
+\end{alignat*}
+\paragraph{}
+Da es nicht sein kann dass zwar \(w_2\) und \(w_1\) jeweils größer sind als \(\theta\), sie zusammengerechnet jedoch kleiner sind, gibt es keine Gewichte \(w_1\), \(w_2\) und \(\theta\) die diese Gleichungen erfüllen können, damit ist gezeigt dass die XOR Funktion mit einem einfachen Perzeptron nicht berechnet werden kann.
+\end{document}
