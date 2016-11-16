@@ -1,0 +1,49 @@
+import numpy as np
+import konkurrenz as ko
+
+def extractDigits(filename, expected_num):
+	data_count = 0
+	digit_count = 0
+	data_points_per_digit = 192
+	data_points_per_line = 12
+	
+	digits = np.zeros(expected_num, dtype=[('data', 'f', data_points_per_digit), ('value', 'i')])
+	
+	with open(filename) as f:
+		lines = f.readlines()
+	
+	for i,line in enumerate(lines):
+		digits_line = line.split()
+		if (len(digits_line) == data_points_per_line):
+			for num in digits_line:
+				digits['data'][digit_count][data_count] = float(num)
+				data_count += 1
+		elif (len(digits_line) == 10):
+			for i,num in enumerate(digits_line):
+				if (num == "1.0"):
+					digits['value'][digit_count] = i
+					break
+		else:
+			if (data_count == data_points_per_digit and digit_count < expected_num):
+				digit_count += 1
+				data_count = 0
+			else:
+				print("Exited because of wrong data")
+				raise SystemExit
+	
+	if (digit_count == expected_num):
+		return digits
+	else:
+		print("Exited because of few digits")
+		raise SystemExit
+
+if __name__ == "__main__":
+	training_name = "./data/digits.trn"
+	training_number = 1000
+	training_digits = extractDigits(training_name, training_number)
+	
+	test_name = "./data/digits.tst"
+	test_number = 200
+	test_digits = extractDigits(test_name, test_number)
+	
+	ko.print_results(training_digits, ko.clustering(training_digits, 10))
