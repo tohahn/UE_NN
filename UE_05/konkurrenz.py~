@@ -1,4 +1,5 @@
 import numpy as np
+from texttable import Texttable
 
 def clustering(digits, k):
 	dim_num = len(digits['data'][0])
@@ -20,7 +21,54 @@ def clustering(digits, k):
 		temp_vector = weight_vecs[largest_index] + current_instance
 		weight_vecs[largest_index] = temp_vector / np.linalg.norm(temp_vector)
 	
-	return weight_vecs
+	return assign_numbers(digits, weight_vecs)
+
+def assign_numbers(digits, weight_vecs):
+	count = np.zeros((len(weight_vecs), 10))
+	
+	for digit in digits:
+		largest_index = -1
+		largest_value = float("-inf")
+		
+		for j in range(0,len(weight_vecs)):
+			current_value = np.dot(digit['data'], weight_vecs[j])
+			if (current_value > largest_value):
+				largest_value = current_value
+				largest_index = j
+				
+		count[largest_index][digit['value']] += 1
+	
+	named_vecs = np.zeros(len(weight_vecs), dtype=[('vector', 'f', len(weight_vecs[0])), ('digit', 'i')])
+	
+	for i,v in enumerate(named_vecs):
+		named_vecs['vector'][i] = weight_vecs[i]
+		named_vecs['digit'][i] = np.argmax(count[i])
+		
+	print(named_vecs['digit'])
+	
+	return named_vecs
+
+def predict_number(digit, named_vecs):
+	largest_index = -1
+	largest_value = float("-inf")
+
+	for j in range(0,len(named_vecs)):
+		current_value = np.dot(digit, named_vecs['vector'][j])
+		if (current_value > largest_value):
+			largest_value = current_value
+			largest_index = j
+	
+	return named_vecs['digit'][j]
+
+def calc_error(digits, named_vecs):
+	error = 0
+	
+	for d in digits:
+		if (d['value'] != predict_number(d['data'], named_vecs)):
+			error += 1
+	
+	return error
+
 
 def print_results(digits, weight_vecs):
 	count = np.zeros((len(weight_vecs), 10))
@@ -37,7 +85,10 @@ def print_results(digits, weight_vecs):
 				
 		count[largest_index][digit['value']] += 1
 	
+	t = Texttable()
+	t.add_row(["Vektor", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
 	for i,v in enumerate(count):
-		print("Dem Vektor {0} wurden folgende Ziffern in folgender Haeufigkeit zugeteilt:".format(i))
-		for j,freq in enumerate(v):
-			print("Ziffer {0}: {1} mal".format(j, freq))
+		#t.add_row(np.insert(v, 0, i))
+		print(np.insert(v, 0, i))
+		print(v)
+	print t.draw()

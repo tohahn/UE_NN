@@ -1,0 +1,100 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\lstset{
+	basicstyle=\footnotesize,
+	numbers=left,
+	tabsize=3,
+	title=\lstname,
+	breaklines=true
+}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{Neuronale Netze - Übung 5}
+\author{Tobias Hahn\\ 3073375}	
+	
+\begin{document}
+\maketitle
+\newpage
+\section{Perzeptionsalgorithmus}
+\subsection{Ziffernerkenner}
+\paragraph{}
+Der Ziffernerkenner wurde in Python implementiert. Die Fehlerraten sind ziemlich hoch, was darauf hinweist dass der Lernalgorithmus für diese Aufgabe ungeeignet ist. Das liegt daran dass der Algorithmus nur die Richtung eines Zahlenclusters vom Nullpunkt angeben kann, da der Vektor nach jedem Schritt normalisiert wird. Da die Ziffern sich in der Richtung jedoch teilweise start überlappen (so ist die Form der 3 eine Unterform der 8 und weist damit in die selbe Richtung) können sie nicht gut auseinandergehalten werden. Hier wäre Lineare Regression besser geeignet, da hier nicht nur die Richtung, sondern der Zentrumspunkt der Zahlen unterschieden wird, also auch der Abstand.
+
+\paragraph{}
+Die Tabellen in der Abgabe werden vom Programm auch so ausgegeben, wobei die erste Zeile die Headerzeile ist und angibt was sich darunter befindet (die Nummer des Vektors, danach die Ziffern wie in der vorgegebenen Klassifizierung). Das Array vor den Tabellen gibt an welche Ziffer der Vektor am meisten erkannt hat, welche Ziffer er also klassifizert wenn er angewandt wird (also sein Produkt am größten ist).
+
+\paragraph{}
+Im folgenden zuerst der Quellcode für die beiden Klassen, danach die Ausgabe in der Kommandozeile.
+\paragraph{}
+\lstinputlisting[language=Python]{../konkurrenz.py}
+\lstinputlisting[language=Python]{../train.py}
+\begin{lstlisting}[title=Beispielausgabe]
+[7 1 7 4 7 1 2 3 8 0]
++--------+-----+----+----+----+----+----+----+----+----+----+
+| Vektor | 0   | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 0      | 0   | 0  | 5  | 2  | 0  | 0  | 0  | 6  | 0  | 2  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 1      | 1   | 26 | 13 | 1  | 7  | 0  | 1  | 3  | 1  | 0  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 2      | 0   | 6  | 6  | 5  | 8  | 7  | 0  | 50 | 2  | 37 |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 3      | 15  | 2  | 1  | 0  | 60 | 5  | 39 | 1  | 0  | 2  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 4      | 0   | 4  | 4  | 2  | 17 | 7  | 0  | 33 | 1  | 7  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 5      | 1   | 67 | 1  | 0  | 2  | 0  | 2  | 0  | 2  | 2  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 6      | 0   | 1  | 29 | 0  | 1  | 1  | 0  | 4  | 0  | 0  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 7      | 0   | 0  | 13 | 77 | 0  | 3  | 1  | 0  | 3  | 8  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 8      | 30  | 3  | 9  | 26 | 4  | 37 | 26 | 1  | 70 | 64 |
++--------+-----+----+----+----+----+----+----+----+----+----+
+| 9      | 106 | 0  | 1  | 0  | 1  | 6  | 6  | 0  | 0  | 3  |
++--------+-----+----+----+----+----+----+----+----+----+----+
+On the training set, the algorithm made 847 mistakes for 1000 digits.
+On the test set, the algorithm made 167 mistakes for 200 digits.
+[1 8 1 0 7 5 6 9 7 4 5 5]
++--------+----+----+---+---+----+---+---+----+---+---+
+| Vektor | 0  | 1  | 2 | 3 | 4  | 5 | 6 | 7  | 8 | 9 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 0      | 0  | 15 | 5 | 8 | 0  | 0 | 0 | 0  | 3 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 1      | 0  | 0  | 0 | 0 | 0  | 1 | 0 | 0  | 5 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 2      | 0  | 0  | 0 | 0 | 0  | 0 | 0 | 0  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 3      | 32 | 0  | 2 | 4 | 1  | 1 | 4 | 1  | 1 | 9 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 4      | 0  | 1  | 2 | 0 | 0  | 0 | 0 | 5  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 5      | 0  | 1  | 0 | 0 | 0  | 2 | 0 | 0  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 6      | 1  | 0  | 6 | 6 | 3  | 3 | 8 | 0  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 7      | 0  | 3  | 1 | 2 | 6  | 3 | 0 | 0  | 1 | 8 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 8      | 0  | 0  | 6 | 3 | 0  | 0 | 0 | 14 | 0 | 1 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 9      | 0  | 0  | 0 | 0 | 12 | 0 | 1 | 0  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 10     | 0  | 0  | 2 | 0 | 1  | 0 | 0 | 0  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+| 11     | 0  | 1  | 1 | 0 | 0  | 4 | 0 | 0  | 0 | 0 |
++--------+----+----+---+---+----+---+---+----+---+---+
+On the training set, the algorithm made 934 mistakes for 1000 digits.
+On the test set, the algorithm made 186 mistakes for 200 digits.
+
+\end{lstlisting}
+\end{document}

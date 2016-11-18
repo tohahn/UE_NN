@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\lstset{
+	basicstyle=\footnotesize,
+	numbers=left,
+	tabsize=3,
+	title=\lstname,
+	breaklines=true
+}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{Neuronale Netze - Übung 5}
+\author{Tobias Hahn\\ 3073375}	
+	
+\begin{document}
+\maketitle
+\newpage
+\section{Perzeptionsalgorithmus}
+\subsection{Ziffernerkenner}
+\paragraph{}
+Der Ziffernerkenner wurde in Python implementiert. Die Fehlerraten sind ziemlich hoch, was darauf hinweist dass der Lernalgorithmus für diese Aufgabe ungeeignet ist. Das liegt daran dass der Algorithmus nur die Richtung eines Zahlenclusters vom Nullpunkt angeben kann, da der Vektor nach jedem Schritt normalisiert wird. Da die Ziffern sich in der Richtung jedoch teilweise start überlappen (so ist die Form der 3 eine Unterform der 8 und weist damit in die selbe Richtung) können sie nicht gut auseinandergehalten werden. Hier wäre Lineare Regression besser geeignet, da hier nicht nur die Richtung, sondern der Zentrumspunkt der Zahlen unterschieden wird, also auch der Abstand.
+
+\paragraph{}
+Die Tabellen in der Abgabe werden vom Programm auch so ausgegeben, wobei die erste Zeile die Headerzeile ist und angibt was sich darunter befindet (die Nummer des Vektors, danach die Ziffern wie in der vorgegebenen Klassifizierung). Das Array vor den Tabellen gibt an welche Ziffer der Vektor am meisten erkannt hat, welche Ziffer er also klassifizert wenn er angewandt wird (also sein Produkt am größten ist).
+
+\paragraph{}
+Im folgenden zuerst der Quellcode für die beiden Klassen, danach die Ausgabe in der Kommandozeile.
+\paragraph{}
+\lstinputlisting[language=Python]{../konkurrenz.py}
+\lstinputlisting[language=Python]{../train.py}
+\begin{lstlisting}[title=Beispielausgabe]
+The original weight vector: [ 9.84658028  0.96802249 -8.5146963   1.333602   -3.55325839 -4.77932809 -0.08857396 -0.15751875 -6.47169592  7.71299722]
+The learned vector: [  4.22755294e-04   1.77767972e-05  -3.40020042e-04   6.74635191e-05  -1.62867848e-04  -1.92920237e-04  -2.40298543e-05  -1.96774406e-05  -2.33433280e-04   3.34287987e-04]
+The number of wrong classifications: 0
+The number of adjustments made to the vector: 212
+The total number of test iterations: 5446
+\end{lstlisting}
+\end{document}

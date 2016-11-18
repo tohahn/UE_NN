@@ -46,4 +46,12 @@ if __name__ == "__main__":
 	test_number = 200
 	test_digits = extractDigits(test_name, test_number)
 	
-	ko.print_results(training_digits, ko.clustering(training_digits, 10))
+	named_vectors = ko.clustering(training_digits, 10)	
+	print_results(training_digits, named_vectors['vector'])
+	print("On the training set, the algorithm made {0} mistakes for {1} digits.".format(ko.calc_error(training_digits, named_vectors), len(training_digits)))
+	print("On the test set, the algorithm made {0} mistakes for {1} digits.".format(ko.calc_error(test_digits, named_vectors), len(test_digits)))
+	
+	named_vectors = ko.clustering(training_digits, 12)	
+	ko.print_results(test_digits, named_vectors['vector'])
+	print("On the training set, the algorithm made {0} mistakes for {1} digits.".format(ko.calc_error(training_digits, named_vectors), len(training_digits)))
+	print("On the test set, the algorithm made {0} mistakes for {1} digits.".format(ko.calc_error(test_digits, named_vectors), len(test_digits)))
