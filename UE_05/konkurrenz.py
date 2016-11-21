@@ -5,7 +5,8 @@ def clustering(digits, k):
 	dim_num = len(digits['data'][0])
 	digits_number = len(digits)
 	weight_vecs = np.random.rand(k, dim_num)
-	np.apply_along_axis(np.linalg.norm, 1, weight_vecs)
+	for i,v in enumerate(weight_vecs):
+		weight_vecs[i] = v / np.linalg.norm(v)
 	
 	for i in range(0,100000):
 		current_instance = digits['data'][np.random.randint(0,digits_number)]
@@ -58,7 +59,7 @@ def predict_number(digit, named_vecs):
 			largest_value = current_value
 			largest_index = j
 	
-	return named_vecs['digit'][j]
+	return named_vecs['digit'][largest_index]
 
 def calc_error(digits, named_vecs):
 	error = 0

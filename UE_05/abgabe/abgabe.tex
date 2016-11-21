@@ -39,62 +39,88 @@ Im folgenden zuerst der Quellcode für die beiden Klassen, danach die Ausgabe in
 \lstinputlisting[language=Python]{../konkurrenz.py}
 \lstinputlisting[language=Python]{../train.py}
 \begin{lstlisting}[title=Beispielausgabe]
-[7 1 7 4 7 1 2 3 8 0]
+[0 5 8 7 1 1 4 2 3 7]
 +--------+-----+----+----+----+----+----+----+----+----+----+
 | Vektor | 0   | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 0      | 0   | 0  | 5  | 2  | 0  | 0  | 0  | 6  | 0  | 2  |
+| 0      | 120 | 0  | 3  | 3  | 0  | 3  | 24 | 1  | 2  | 22 |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 1      | 1   | 26 | 13 | 1  | 7  | 0  | 1  | 3  | 1  | 0  |
+| 1      | 0   | 0  | 0  | 1  | 0  | 19 | 1  | 0  | 1  | 6  |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 2      | 0   | 6  | 6  | 5  | 8  | 7  | 0  | 50 | 2  | 37 |
+| 2      | 10  | 11 | 18 | 11 | 16 | 36 | 36 | 13 | 48 | 11 |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 3      | 15  | 2  | 1  | 0  | 60 | 5  | 39 | 1  | 0  | 2  |
+| 3      | 0   | 0  | 4  | 4  | 3  | 0  | 0  | 25 | 2  | 25 |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 4      | 0   | 4  | 4  | 2  | 17 | 7  | 0  | 33 | 1  | 7  |
+| 4      | 1   | 39 | 15 | 37 | 1  | 0  | 0  | 7  | 6  | 1  |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 5      | 1   | 67 | 1  | 0  | 2  | 0  | 2  | 0  | 2  | 2  |
+| 5      | 2   | 59 | 1  | 2  | 3  | 0  | 0  | 9  | 4  | 10 |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 6      | 0   | 1  | 29 | 0  | 1  | 1  | 0  | 4  | 0  | 0  |
+| 6      | 19  | 0  | 1  | 2  | 77 | 5  | 11 | 18 | 2  | 36 |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 7      | 0   | 0  | 13 | 77 | 0  | 3  | 1  | 0  | 3  | 8  |
+| 7      | 0   | 0  | 32 | 25 | 0  | 1  | 3  | 1  | 14 | 13 |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 8      | 30  | 3  | 9  | 26 | 4  | 37 | 26 | 1  | 70 | 64 |
+| 8      | 1   | 0  | 3  | 28 | 0  | 2  | 0  | 0  | 0  | 1  |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-| 9      | 106 | 0  | 1  | 0  | 1  | 6  | 6  | 0  | 0  | 3  |
+| 9      | 0   | 0  | 5  | 0  | 0  | 0  | 0  | 24 | 0  | 0  |
 +--------+-----+----+----+----+----+----+----+----+----+----+
-On the training set, the algorithm made 847 mistakes for 1000 digits.
-On the test set, the algorithm made 167 mistakes for 200 digits.
-[1 8 1 0 7 5 6 9 7 4 5 5]
-+--------+----+----+---+---+----+---+---+----+---+---+
-| Vektor | 0  | 1  | 2 | 3 | 4  | 5 | 6 | 7  | 8 | 9 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 0      | 0  | 15 | 5 | 8 | 0  | 0 | 0 | 0  | 3 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 1      | 0  | 0  | 0 | 0 | 0  | 1 | 0 | 0  | 5 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 2      | 0  | 0  | 0 | 0 | 0  | 0 | 0 | 0  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 3      | 32 | 0  | 2 | 4 | 1  | 1 | 4 | 1  | 1 | 9 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 4      | 0  | 1  | 2 | 0 | 0  | 0 | 0 | 5  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 5      | 0  | 1  | 0 | 0 | 0  | 2 | 0 | 0  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 6      | 1  | 0  | 6 | 6 | 3  | 3 | 8 | 0  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 7      | 0  | 3  | 1 | 2 | 6  | 3 | 0 | 0  | 1 | 8 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 8      | 0  | 0  | 6 | 3 | 0  | 0 | 0 | 14 | 0 | 1 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 9      | 0  | 0  | 0 | 0 | 12 | 0 | 1 | 0  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 10     | 0  | 0  | 2 | 0 | 1  | 0 | 0 | 0  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-| 11     | 0  | 1  | 1 | 0 | 0  | 4 | 0 | 0  | 0 | 0 |
-+--------+----+----+---+---+----+---+---+----+---+---+
-On the training set, the algorithm made 934 mistakes for 1000 digits.
-On the test set, the algorithm made 186 mistakes for 200 digits.
-
+On the training set, the algorithm made 529 mistakes for 1000 digits.
+On the test set, the algorithm made 93 mistakes for 200 digits.
+[0 3 2 3 2 1 4 1 1 1 7 5]
++--------+----+---+----+----+----+----+---+---+---+---+
+| Vektor | 0  | 1 | 2  | 3  | 4  | 5  | 6 | 7 | 8 | 9 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 0      | 30 | 4 | 3  | 1  | 5  | 2  | 6 | 2 | 5 | 7 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 1      | 0  | 0 | 0  | 0  | 0  | 1  | 0 | 0 | 1 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 2      | 0  | 3 | 11 | 3  | 0  | 0  | 0 | 6 | 1 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 3      | 1  | 0 | 1  | 15 | 0  | 1  | 0 | 0 | 0 | 7 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 4      | 0  | 0 | 7  | 0  | 1  | 0  | 0 | 2 | 0 | 1 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 5      | 0  | 9 | 0  | 0  | 1  | 0  | 0 | 0 | 0 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 6      | 0  | 0 | 0  | 0  | 13 | 0  | 4 | 2 | 0 | 3 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 7      | 0  | 0 | 0  | 0  | 0  | 0  | 0 | 0 | 0 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 8      | 0  | 2 | 2  | 1  | 1  | 0  | 0 | 0 | 1 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 9      | 0  | 3 | 0  | 0  | 2  | 0  | 2 | 2 | 0 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 10     | 1  | 0 | 0  | 0  | 0  | 0  | 0 | 6 | 0 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+| 11     | 1  | 0 | 1  | 3  | 0  | 10 | 1 | 0 | 2 | 0 |
++--------+----+---+----+----+----+----+---+---+---+---+
+On the training set, the algorithm made 516 mistakes for 1000 digits.
+On the test set, the algorithm made 94 mistakes for 200 digits.
 \end{lstlisting}
+
+\section{Verständnisfrage}
+Tote Knoten entstehen in einem Netz, wenn einer der Vektoren nie ausgewählt wird da immer andere Vektoren ein größeres Vektorprodukt mit den Beispielen hat (also "näher" dranliegt). Dieser Prozess ist selbstverstärkend, da die Vektoren die Updates bekommen "näher" an die Daten rücken und daher in Zukunft eher bevorzugt werden.
+\paragraph{}
+Das Vorkommen von toten Knoten kann dadurch zumindest erschwert werden, dass man die Updateregel anpasst. Die normale Updateregel sieht so aus:
+\[
+	w_m = w_m + x_j
+\]
+mit anschließender Normierung. Wie man sehen kann wird hier das ganze Beispiel verwendet, der Vektor rückt dementsprechend nahe an die Daten heran und hat dadurch zukünftig einen Vorteil gegenüber den anderen. Im folgenden werden drei Arten der Anpassung vorgestellt und warum sie tote Knoten vermeiden.
+
+\subsection{Lernrate}
+Die Idee der Lernrate ist, Beispiele immer nur bis zu einem gewissen Grade in das Update einfließen zu lassen. Dies bewirkt, dass sich Vektoren nicht zu sehr verbessern, und sich dadurch die Chance erhöht dass andere Vektoren beim nächsten Update ausgewählt werden. Die Updateregel sieht dann folgendermaßen aus:
+\[
+	w_m = w_m + \eta * x_j \textrm{ wobei } \eta \in (0,1]
+\]
+
+\subsection{Differenz}
+Die Grundidee bei der Differenz ist wie bei der Lernrate, plus dass der Gewichtsvektor nur um den Unterschied zwischen dem Beispiel und dem Gewichtsvektor verbessert wird. Dies bewirkt eine weitere Verlangsamung der Konvergenz, mit den selben Effekten wie bei der Lernrate:
+\[
+	w_m = w_m + \eta * (x_j - w_m) \textrm{ wobei } \eta \in (0,1]
+\]
+
+\subsection{Stapelverarbeitung}
+Die Stapelverarbeitung stellt keine neue Formel für das Update dar, sondern eine Methode, wie beliebige Updateregeln angewendet werden. Statt dass Update gleich auszuführen wird die Differenz für alle Vektoren für eine gewisse Anzahl an Updates akkumuliert, um erst danach angewandt zu werden. Die Idee dabei ist, dass die Vektoren nicht gleich verbessert werden, und so auch initial "schlechte" Vektoren die Chance erhalten, sich Updates zu finden. Erst nach ein paar Durchgängen werden die Vektoren verbessert, mit der Hoffnung dass sich schlechte Vektoren Updates gefunden haben und sich dementsprechend verbessern.
+
+\subsection{Zusammenfassung}
+Für alle Veränderungen der Vermeidung von toten Knoten lässt sich sagen dass sie tote Knoten nicht verhindern können. Sie sind alle darauf ausgerichtet relativ schlechten Vektoren größere Chancen zu geben, sich für manche Beispiele doch als passend zu erweisen und sich so zu verbessern. Sind jedoch initial Vektoren ausgewählt die einfach gar nicht zu den Daten passen werden sie immer noch niemals ausgewählt und erhalten deswegen keine Updates.
 \end{document}
