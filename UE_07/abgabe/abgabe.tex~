@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+\graphicspath{{../results/}}
+
+\lstset{
+	basicstyle=\footnotesize,
+	numbers=left,
+	tabsize=3,
+	title=\lstname,
+	breaklines=true
+}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{Neuronale Netze - Übung 7}
+\author{Tobias Hahn\\ 3073375}	
+	
+\begin{document}
+\maketitle
+\newpage
+\section{Neuronales Netz}
+\subsection{Implementierung}
+Das Neuronale Netz habe ich nicht mit Rprop implementiert sondern einfach mit fixer Lernrate. Das liegt daran dass ich das Netz ursprünglich als reine Matrixmultiplikation implementiert habe, die also nicht Beispiel pro Beispiel durchgeht sondern immer gleich alle Beispiele als Beispielmatrix nimmt. Bei so einer Vorgehensweise ist die adaptive Lernratenanpassung nicht hilfreich, weswegen ich sie weggelassen habe. Sehe natürlich ein dass das Punkteabzüge gibt, aber alles nochmal umbauen war mir zu umständlich.
+
+\subsection{Code}
+Der Code des Netzes ist hier:
+
+\paragraph{}
+Im folgenden zuerst der Quellcode für die beiden Klassen, danach zwei Bilder der Ergebnisse.
+\paragraph{}
+\lstinputlisting[language=Python]{../code/neural_network.py}
+\lstinputlisting[language=Python]{../code/train.py}
+
+\subsection{Ergebnisse}
+\begin{lstlisting}
+Anzahl verdeckter Knoten: 0 / Training error: 444.43581 / Test error: 89.10453
+Anzahl verdeckter Knoten: 10 / Training error: 1.48327 / Test error: 16.24645
+Anzahl verdeckter Knoten: 20 / Training error: 445.31566 / Test error: 89.30035
+Anzahl verdeckter Knoten: 30 / Training error: 445.38601 / Test error: 89.24764
+Anzahl verdeckter Knoten: 40 / Training error: 0.57803 / Test error: 10.83979
+Anzahl verdeckter Knoten: 50 / Training error: 0.54577 / Test error: 11.64844
+Anzahl verdeckter Knoten: 60 / Training error: 0.51040 / Test error: 11.97264
+Anzahl verdeckter Knoten: 70 / Training error: 0.51243 / Test error: 11.41059
+Anzahl verdeckter Knoten: 80 / Training error: 0.49254 / Test error: 11.84091
+Anzahl verdeckter Knoten: 90 / Training error: 0.50322 / Test error: 12.59262
+Anzahl verdeckter Knoten: 100 / Training error: 0.49312 / Test error: 11.94842
+\end{lstlisting}
+
+\subsection{Interpretation}
+Wie man sieht ist der Error mit einer Anzahl verdeckter Knoten unter 30 recht hoch, außer bei 10. Dies kann daran liegen dass für diese Beispiele die Lernrate zu niedrig gewählt wurde, jedoch auch daran (das wäre der normale Fehler bei zu wenigen Knoten) die Knoten nicht ausreichen um alle relevanten Features der Bilder abzubilden. Über 30 verändert sich dann der Fehler nicht mehr so stark, was wohl daran liegt dass es keine interessanten Features mehr gibt die die Fehlerrate verbessern.
+Dass bei 10 die Lernrate so niedrig liegt liegt einfach daran dass die verdeckte Schicht wahrscheinlich als Output-Schicht agiert, also jeweils eine Ziffer abbildet.
+
+\end{document}
