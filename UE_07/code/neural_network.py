@@ -9,12 +9,8 @@ def sigmoid(X, Y=None, deriv=False):
 def error(X, Y):
 	return 0.5 * (X - Y)**2
 
-class Layer:
-	def __init__(self, size=None, is_input=False, is_error=False, is_error_sum=False, activation=sigmoid):
-		self.is_input = is_input
-		self.is_error = is_error
-		self.is_error_sum = is_error_sum
-		
+class InputLayer:
+	def __init__(self, size=None, activation=sigmoid):		
 		self.activation = activation
 		
 		# Z is the matrix holding the activation values
@@ -23,12 +19,6 @@ class Layer:
 		self.W = None
 		# S is the matrix that holds the inputs to this layer
 		self.S = None
-		# D is the matrix that holds the deltas for this layer
-		self.D = None
-		# Y is the matrix holding the true labels
-		self.Y = None
-		# Fp is the matrix that holds the derivatives of the activation function
-		self.Fp = None
 
 		if not is_error and not is_error_sum:
 			self.size = size[0]-1

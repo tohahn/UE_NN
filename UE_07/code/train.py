@@ -1,5 +1,5 @@
 import numpy as np
-from neural_network import NN
+from NeuralNet import NeuralNet
 
 def extractDigits(filename, expected_num):
 	data_count = 0
@@ -47,6 +47,5 @@ if __name__ == "__main__":
 	test_number = 200
 	test_digits = extractDigits(test_name, test_number)
 	
-	for i in range(0,11):
-		nn = NN([192, i*10, 10])
-		nn.evaluate(train_digits['data'], train_digits['value'], test_digits['data'], test_digits['value'])
+	myNet = NeuralNet(192, 10, [100])
+	myNet.train(train_digits['data'], train_digits['value'], test_digits['data'], test_digits['value'])
