@@ -47,5 +47,5 @@ if __name__ == "__main__":
 	test_number = 200
 	test_digits = extractDigits(test_name, test_number)
 	
-	myNet = NeuralNet(192, 10, [100])
+	myNet = NeuralNet(192,10,[20,20,20])
 	myNet.train(train_digits['data'], train_digits['value'], test_digits['data'], test_digits['value'])
