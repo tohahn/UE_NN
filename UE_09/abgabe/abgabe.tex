@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\lstset{
+	basicstyle=\footnotesize,
+	numbers=left,
+	tabsize=3,
+	title=\lstname,
+	breaklines=true
+}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{Neuronale Netze - Übung 9}
+\author{Tobias Hahn\\ 3073375}	
+	
+\begin{document}
+\maketitle
+\newpage
+\section{LSTM}
+\subsection{Aufgabenstellung}
+Die Aufgabenstellung war es, ein LSTM zu konstruieren welches 10 Eingaben nach einer 1 diese wieder ausgibt, wenn dazwischen nur 0en waren. So würde z.B. folgende Eingabe die Ausgabe 1 hervorrufen: 10000000000. Immer, wenn 10 0en auf eine 1 folgen wird also eine 1 ausgegeben, ansonsten 0.
+\paragraph{}
+Um diesen Effekt mit einer LSTM zu erreichen verwenden wir eigene Aktivierungsfunktionen und folgende Features: c, i und f. Die Aktivierungsfunktionen für die Gates werden jeweils mit angegeben.
+
+\begin{align*}
+	f^t &= 1 - x^t \\
+	i^t &= 1 - x^t \\
+	y^t &= \begin{cases}
+		1 \text{ für } c^t = 10 \\
+		0 \text{ sonst}
+	\end{cases} \\
+	c^t &= i^t + f^t * c^{t-1}
+\end{align*}
+\paragraph{}
+Dieser Automat addiert ständig 1 zum Status hinzu, solange der Input 0 ist, wenn der Input einmal 1 ist wird der Status vergessen und der Counter somit neu gestartet. Um sicherzugehen dass keine 1 ausgegeben wird obwohl noch keine 1 kam muss der Counter initial auf -unendlich gesetzt werden.
+
+\subsection{Rekurränte McCulloch Pitts Zellen}
+Ja, diese Aufgabe kann auch mit diesen Zellen erledigt werden. Dabei können wir einen FSM erstellen der 10 Zustände und einen Startzustand hat. Vom Startzustand kommt man mit 1 auf den ersten Zustand, mit 0 wieder auf den Startzustand. Von da an kommt man von Zustand 1 bis 9 jeweils mit 0 zum weitern Zustand, mit 1 wieder zurück zu Zustand 1. Bei Zustand 10 kommt man mit 1 zurück zu Zustand 1 und mit 0 zurück zum Startzustand. Es wird in jedem Zustand 0 ausgegeben außer im Zustand 10, wo 1 ausgegeben wird.
+\paragraph{}
+Diesen FSM können wir mit der in der Vorlesung vorgestellten Methode in ein Netz aus McCulloch Pits Zellen verwandeln.
+
+\section{LSTM Train}
+Das LSTM wurde mit Keras trainiert, welches intern Tensorflow benutzt. Dafür wurde Random-Data erstellt und dann trainiert.
+\subsection{Code}
+\subsubsection{Data Generation}
+\lstinputlisting[language=Python]{"../data/gen_data.py"}
+\subsubsection{Training}
+\lstinputlisting[language=Python]{../code/lstm.py}
+\subsection{Results}
+\subsubsection{Console Output}
+\begin{lstlisting}
+Using TensorFlow backend.
+Epoch 1/1
+7940s - loss: 5.0080e-04
+Saved model to disk
+\end{lstlisting}
+\subsubsection{Saved Model}
+\lstinputlisting{../code/model.json}
+\subsubsection{Prediciton and error evalutation}
+\lstinputlisting{../code/test.py}
+\lstinputlisting{../code/error.py}
+\paragraph{Console output}
+Mean squared error: 0.00045656099664777614
+\end{document}
